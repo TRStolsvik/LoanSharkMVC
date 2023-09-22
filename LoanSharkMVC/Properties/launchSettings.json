@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "DotNET6_MVC_CodingChallengeTemplate": {
+    "LoanSharkMVC": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

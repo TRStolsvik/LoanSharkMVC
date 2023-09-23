@@ -23,16 +23,23 @@ namespace DotNET6_MVC_CodingChallengeTemplate.Controllers
         [HttpGet]
         public IActionResult App()
         {
-            LoanModel model = new();
+            LoanModel loan = new();
 
-            return View(model);
+            loan.LoanPayment = 0.0m;
+            loan.TotalInterest = 0.0m;
+            loan.TotalCost = 0.0m;
+            loan.LoanInterest = 3.5m;
+            loan.LoanAmount = 15000m;
+            loan.LoanTerm = 60;
+
+            return View(loan);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult App(LoanModel model)
+        [AutoValidateAntiforgeryToken]
+        public IActionResult App(LoanModel loan)
         {
-            LoanModel output = LoanCalculator.GetValues(model);
+            LoanModel output = LoanCalculator.GetPayments(loan);
 
             return View(output);
         }

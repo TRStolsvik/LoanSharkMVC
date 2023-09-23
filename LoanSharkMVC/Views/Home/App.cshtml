@@ -20,27 +20,27 @@
                         <div class="row row-cols-1 row-cols-md-2">
                             <div class="col col-md-8">
                                 <h1 class="display-3 text-center">Loan Calculator</h1>
-                                <div class="row">
+                                <form asp-controller="Home" asp-action="App" method="post" class="row">
                                     <div class="col-4 p-3 border border-black d-flex flex-column">
                                         <div class="d-xl-flex mb-3">
                                             <label asp-for="LoanAmount" class="form-label col-xl-4">Amount ($):</label>
                                             <input asp-for="LoanAmount"
                                                    type="number"
-                                                   value="25000"
+                                                   value="@Model.LoanAmount"
                                                    class="form-control col" />
                                         </div>
                                         <div class="d-xl-flex mb-3">
                                             <label asp-for="LoanTerm" class="form-label col-xl-4">Term (months):</label>
                                             <input asp-for="LoanTerm"
                                                    type="number"
-                                                   value="60"
+                                                   value="@Model.LoanTerm"
                                                    class="form-control col" />
                                         </div>
                                         <div class="d-xl-flex mb-2">
                                             <label asp-for="LoanInterest" class="form-label col-xl-4">Interest (%):</label>
                                             <input asp-for="LoanInterest"
                                                    type="number"
-                                                   value="5"
+                                                   value="@Model.LoanInterest"
                                                    class="form-control col" />
                                         </div>
                                         <div class="text-end mt-auto mt-xl-auto">
@@ -58,26 +58,26 @@
                                         <div id="csDisplayHeader" class="row">
                                             <div class="col-12">
                                                 <div class="mt-5">
-                                                    <h3 id="csMonthlyPayment" class="display-5 text-center"></h3>
+                                                    <h3 id="csMonthlyPayment" class="display-5 text-center">@Model.LoanPayment.ToString("C")</h3>
                                                 </div>
                                             </div>
                                             <div class="col-12 gx-5 mt-5">
                                                 <div class="row">
                                                     <div class="col-6">Total Principal:</div>
-                                                    <div id="csTotalPrincipal" class="col-6 text-end"></div>
+                                                    <div id="csTotalPrincipal" class="col-6 text-end">@Model.LoanAmount.ToString("C")</div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-6">Total Interest:</div>
-                                                    <div id="csTotalInterest" class="col-6 text-end"></div>
+                                                    <div id="csTotalInterest" class="col-6 text-end">@Model.TotalInterest.ToString("C")</div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-6">Total Cost:</div>
-                                                    <div id="csTotalCost" class="col-6 text-end"></div>
+                                                    <div id="csTotalCost" class="col-6 text-end">@Model.TotalCost.ToString("C")</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                                 <div class="row mt-5">
                                     <div class="col-12 table-responsive g-0">
                                         <table class="table table-bordered table-striped table-sm">
@@ -91,7 +91,19 @@
                                                     <td class="text-end">Balance</td>
                                                 </tr>
                                             </thead>
-                                            <tbody id="csResults"></tbody>
+                                            <tbody id="csResults">
+                                                @foreach (var item in Model.LoanPayments)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Month</td>
+                                                        <td class="text-end">@item.Payment.ToString("C")</td>
+                                                        <td class="text-end">@item.MonthlyPrincipal.ToString("C")</td>
+                                                        <td class="text-end">@item.MonthlyInterest.ToString("C")</td>
+                                                        <td class="text-end">@item.TotalInterest.ToString("C")</td>
+                                                        <td class="text-end">@item.Balance.ToString("C")</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>

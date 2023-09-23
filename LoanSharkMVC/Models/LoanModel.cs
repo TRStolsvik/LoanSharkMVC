@@ -2,15 +2,13 @@
 {
     public class LoanModel
     {
-        public double LoanAmount { get; set; }
-        public double LoanTerm { get; set; }
-        public double LoanInterest { get; set; }
-        public double TotalInterest { get; set; }
-        public double MonthlyInteres { get; set; }
-        public double InterestRate { get; set; }
-        public double MonthlyPayment { get; set; }
-        public double MonthlyPrincipal { get; set; }
-        public double CurrentMonth { get; set; }
-        public double CurrentBalance { get; set; }
+        public decimal LoanAmount { get; set; }
+        public decimal LoanInterest { get; set; }
+        public int LoanTerm { get; set; }
+        public decimal LoanPayment { get; set; }
+        public decimal TotalInterest { get; set; }
+        public decimal TotalCost { get; set; }
+
+        public List<LoanPaymentModel> LoanPayments { get; set; } = new();
     }
 }

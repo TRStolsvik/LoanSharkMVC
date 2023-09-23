@@ -1,7 +1,7 @@
 ﻿<main class="flex-shrink-0">
     <div class="container">
         <h2 class="border-1 border-bottom border-dark">
-            The Code for Loan Shark MVC is structured in XX functions.
+            The Code for Loan Shark MVC is structured in 4 (6) function. The view and both models are also included.
         </h2>
         <div id="accordionItemOne" class="accordion mt-2">
             <div class="accordion-item bg-secondary-subtle">
@@ -11,8 +11,8 @@
                             data-bs-target="#accordionPanelOne"
                             aria-expanded="true"
                             aria-controls="accordionPanelOne"
-                            class="accordion-button bg-dark text-light">
-                        Function Name #1
+                            class="accordion-button bg-primary text-light">
+                        GetPayments()
                     </button>
                 </h3>
                 <div id="accordionPanelOne"
@@ -20,15 +20,45 @@
                     <div class="accordion-body">
                         <div class="row row-cols-1 row-cols-md-2">
                             <div class="col col-md-8">
-                                <pre data-start="1"><code class="language-javascript">
-                            // Call Hello World!
-                            function HelloWorld() {
-                                alert('Hello World!');
-                            }                                            
-                        </code></pre>
+                                <pre data-start="1"><code class="language-dotnet">
+                                    public static LoanModel GetPayments(LoanModel loan)
+                                    {
+                                        loan.LoanPayment = CalculateMonthlyPayment(loan.LoanAmount, loan.LoanInterest, loan.LoanTerm);
+
+                                        var balance = loan.LoanAmount;
+                                        var totalInterest = 0.0m;
+                                        var monthlyInterestAmount = 0.0m;
+                                        var monthlyPrincipal = 0.0m;
+                                        var monthlyInterestRate = CalculateMonthlyInterest(loan.LoanInterest);
+
+                                        for (int month = 1; month <= loan.LoanTerm; month++)
+                                        {
+                                            monthlyInterestAmount = CalculateMonthlyInterestAmount(balance, monthlyInterestRate);
+                                            totalInterest += monthlyInterestAmount;
+                                            monthlyPrincipal = loan.LoanPayment - monthlyInterestAmount;
+                                            balance -= monthlyPrincipal;
+
+                                            LoanPaymentModel loanPayment = new();
+
+                                            loanPayment.Month = month;
+                                            loanPayment.Payment = loan.LoanPayment;
+                                            loanPayment.MonthlyPrincipal = monthlyPrincipal;
+                                            loanPayment.MonthlyInterest = monthlyInterestAmount;
+                                            loanPayment.TotalInterest = totalInterest;
+                                            loanPayment.Balance = balance;
+
+                                            loan.LoanPayments.Add(loanPayment);
+                                        }
+
+                                        loan.TotalInterest = totalInterest;
+                                        loan.TotalCost = loan.LoanAmount + totalInterest;
+
+                                        return loan;
+                                    }
+                                </code></pre>
                             </div>
                             <div class="col col-md-4">
-                                <h5>HelloWorld()</h5>
+                                <h5>GetPayments()</h5>
                                 <p>
                                     Hello World is a function that displays an alert with a
                                     message of "Hello World!"
@@ -47,15 +77,370 @@
                             data-bs-target="#accordionPanelTwo"
                             aria-expanded="true"
                             aria-controls="accordionPanelTwo"
-                            class="accordion-button bg-dark text-light">
-                        Function Name #2
+                            class="accordion-button bg-primary text-light">
+                        CalculateMonthlyPayment()
                     </button>
                 </h3>
                 <div id="accordionPanelTwo" class="accordion-collapse collapse">
                     <div class="accordion-body">
                         <div class="row row-cols-1 row-cols-md-2">
                             <div class="col col-md-8">
-                                <pre data-start="5"><code class="language-javascript">
+                                <pre data-start="5"><code class="language-dotnet">
+                                    private static decimal CalculateMonthlyPayment(decimal loanAmount, decimal loanInterest, int loanTerm)
+                                    {
+                                        decimal monthlyLoanInterest = CalculateMonthlyInterest(loanInterest);
+
+                                        double rateDouble = Convert.ToDouble(monthlyLoanInterest);
+                                        double amountDouble = Convert.ToDouble(loanAmount);
+
+                                        double paymentDouble = (amountDouble * rateDouble) / (1 - Math.Pow(1 + rateDouble, -loanTerm));
+
+                                        return Convert.ToDecimal(paymentDouble);
+                                    }
+                                </code></pre>
+                            </div>
+                            <div class="col col-md-4">
+                                <h5>CalculateMonthlyPayment()</h5>
+                                <p>
+                                    Hello World is a function that displays an alert with a
+                                    message of "Hello World!"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="accordionItemThree" class="accordion mt-1">
+            <div class="accordion-item bg-secondary-subtle">
+                <h3 class="accordion-header">
+                    <button type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#accordionPanelThree"
+                            aria-expanded="true"
+                            aria-controls="accordionPanelThree"
+                            class="accordion-button bg-primary text-light">
+                        CalculateMonthlyInterest()
+                    </button>
+                </h3>
+                <div id="accordionPanelThree" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="row row-cols-1 row-cols-md-2">
+                            <div class="col col-md-8">
+                                <pre data-start="5"><code class="language-dotnet">
+                                    private static decimal CalculateMonthlyInterest(decimal loanInterest)
+                                    {
+                                        return loanInterest / 1200;
+                                    }
+                                </code></pre>
+                            </div>
+                            <div class="col col-md-4">
+                                <h5>CalculateMonthlyInterest()</h5>
+                                <p>
+                                    Hello World is a function that displays an alert with a
+                                    message of "Hello World!"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="accordionItemFour" class="accordion mt-1">
+            <div class="accordion-item bg-secondary-subtle">
+                <h3 class="accordion-header">
+                    <button type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#accordionPanelFour"
+                            aria-expanded="true"
+                            aria-controls="accordionPanelFour"
+                            class="accordion-button bg-primary text-light">
+                        CalculateMonthlyInterestAmount()
+                    </button>
+                </h3>
+                <div id="accordionPanelFour" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="row row-cols-1 row-cols-md-2">
+                            <div class="col col-md-8">
+                                <pre data-start="5"><code class="language-dotnet">
+                                    private static decimal CalculateMonthlyInterestAmount(decimal balance, decimal monthlyInterestRate)
+                                    {
+                                        return balance * monthlyInterestRate;
+                                    }
+                                </code></pre>
+                            </div>
+                            <div class="col col-md-4">
+                                <h5>CalculateMonthlyInterestAmount()</h5>
+                                <p>
+                                    Hello World is a function that displays an alert with a
+                                    message of "Hello World!"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="accordionItemFive" class="accordion mt-1">
+            <div class="accordion-item bg-secondary-subtle">
+                <h3 class="accordion-header">
+                    <button type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#accordionPanelFive"
+                            aria-expanded="true"
+                            aria-controls="accordionPanelFive"
+                            class="accordion-button bg-primary text-light">
+                        App // HttpGet
+                    </button>
+                </h3>
+                <div id="accordionPanelFive" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="row row-cols-1 row-cols-md-2">
+                            <div class="col col-md-8">
+                                <pre data-start="5"><code class="language-dotnet">
+                                    [HttpGet]
+                                    public IActionResult App()
+                                    {
+                                        LoanModel loan = new();
+
+                                        loan.LoanPayment = 0.0m;
+                                        loan.TotalInterest = 0.0m;
+                                        loan.TotalCost = 0.0m;
+                                        loan.LoanInterest = 3.5m;
+                                        loan.LoanAmount = 15000m;
+                                        loan.LoanTerm = 60;
+
+                                        return View(loan);
+                                    }
+                                </code></pre>
+                            </div>
+                            <div class="col col-md-4">
+                                <h5>App // GET</h5>
+                                <p>
+                                    Hello World is a function that displays an alert with a
+                                    message of "Hello World!"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="accordionItemSix" class="accordion mt-1">
+            <div class="accordion-item bg-secondary-subtle">
+                <h3 class="accordion-header">
+                    <button type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#accordionPanelSix"
+                            aria-expanded="true"
+                            aria-controls="accordionPanelSix"
+                            class="accordion-button bg-primary text-light">
+                        App() // HttpPost
+                    </button>
+                </h3>
+                <div id="accordionPanelSix" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="row row-cols-1 row-cols-md-2">
+                            <div class="col col-md-8">
+                                <pre data-start="5"><code class="language-dotnet">
+                                    [HttpPost]
+                                    [AutoValidateAntiforgeryToken]
+                                    public IActionResult App(LoanModel loan)
+                                    {
+                                        LoanModel output = LoanCalculator.GetPayments(loan);
+
+                                        return View(output);
+                                    }
+                                </code></pre>
+                            </div>
+                            <div class="col col-md-4">
+                                <h5>App // POST</h5>
+                                <p>
+                                    Hello World is a function that displays an alert with a
+                                    message of "Hello World!"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="accordionItemSeven" class="accordion mt-1">
+            <div class="accordion-item bg-secondary-subtle">
+                <h3 class="accordion-header">
+                    <button type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#accordionPanelSeven"
+                            aria-expanded="true"
+                            aria-controls="accordionPanelSeven"
+                            class="accordion-button bg-primary text-light">
+                        App view
+                    </button>
+                </h3>
+                <div id="accordionPanelSeven" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="row row-cols-1 row-cols-md-2">
+                            <div class="col col-md-8">
+                                <pre data-start="5"><code class="language-dotnet">
+                                    &lt;form asp-controller="Home" asp-action="App" method="post" class="row">
+                                    &lt;div class="col-4 p-3 border border-black d-flex flex-column">
+                                    &lt;div class="d-xl-flex mb-3">
+                                    &lt;label asp-for="LoanAmount" class="form-label col-xl-4">Amount ($):&lt;/label>
+                                    &lt;input asp-for="LoanAmount"
+                                    type="number"
+                                    value="@@Model.LoanAmount"
+                                    class="form-control col" />
+                                    &lt;/div>
+                                    &lt;div class="d-xl-flex mb-3">
+                                    &lt;label asp-for="LoanTerm" class="form-label col-xl-4">Term (months):&lt;/label>
+                                    &lt;input asp-for="LoanTerm"
+                                    type="number"
+                                    value="@@Model.LoanTerm"
+                                    class="form-control col" />
+                                    &lt;/div>
+                                    &lt;div class="d-xl-flex mb-2">
+                                    &lt;label asp-for="LoanInterest" class="form-label col-xl-4">Interest (%):&lt;/label>
+                                    &lt;input asp-for="LoanInterest"
+                                    type="number"
+                                    value="@@Model.LoanInterest"
+                                    class="form-control col" />
+                                    &lt;/div>
+                                    &lt;div class="text-end mt-auto mt-xl-auto">
+                                    &lt;button id="csBtnSubmit"
+                                    type="submit"
+                                    class="btn btn-primary btn-lg">
+                                    Calculate Loan
+                                    &lt;/button>
+                                    &lt;/div>
+                                    &lt;/div>
+                                    &lt;div class="col-8 p-3 border border-black">
+                                    &lt;h2 class="text-center border-bottom border-black">
+                                    Your Monthly Payment
+                                    &lt;/h2>
+                                    &lt;div id="csDisplayHeader" class="row">
+                                    &lt;div class="col-12">
+                                    &lt;div class="mt-5">
+                                    &lt;h3 id="csMonthlyPayment" class="display-5 text-center">@@Model.LoanPayment.ToString("C")&lt;/h3>
+                                    &lt;/div>
+                                    &lt;/div>
+                                    &lt;div class="col-12 gx-5 mt-5">
+                                    &lt;div class="row">
+                                    &lt;div class="col-6">Total Principal:
+                                    &lt;/div>
+                                    &lt;div id="csTotalPrincipal" class="col-6 text-end">@@Model.LoanAmount.ToString("C")
+                                    &lt;/div>
+                                    &lt;/div>
+                                    &lt;div class="row">
+                                    &lt;div class="col-6">Total Interest:
+                                    &lt;/div>
+                                    &lt;div id="csTotalInterest" class="col-6 text-end">@@Model.TotalInterest.ToString("C")
+                                    &lt;/div>
+                                    &lt;/div>
+                                    &lt;div class="row">
+                                    &lt;div class="col-6">Total Cost:
+                                    &lt;/div>
+                                    &lt;div id="csTotalCost" class="col-6 text-end">@@Model.TotalCost.ToString("C")
+                                    &lt;/div>
+                                    &lt;/div>
+                                    &lt;/div>
+                                    &lt;/div>
+                                    &lt;/div>
+                                    &lt;/form>
+                                    &lt;div class="row mt-5">
+                                    &lt;div class="col-12 table-responsive g-0">
+                                    &lt;table class="table table-bordered table-striped table-sm">
+                                    &lt;thead class="fw-bold">
+                                    &lt;tr>
+                                    &lt;td>Month&lt;/td>
+                                    &lt;td class="text-end">Payment&lt;/td>
+                                    &lt;td class="text-end">Principal&lt;/td>
+                                    &lt;td class="text-end">Interest&lt;/td>
+                                    &lt;td class="text-end">Total Interest&lt;/td>
+                                    &lt;td class="text-end">Balance&lt;/td>
+                                    &lt;/tr>
+                                    &lt;/thead>
+                                    &lt;tbody id="csResults">
+                                    @@foreach (var item in Model.LoanPayments)
+                                    {
+                                    &lt;tr>
+                                    &lt;td>@@item.Month&lt;/td>
+                                    &lt;td class="text-end">@@item.Payment.ToString("C")&lt;/td>
+                                    &lt;td class="text-end">@@item.MonthlyPrincipal.ToString("C")&lt;/td>
+                                    &lt;td class="text-end">@@item.MonthlyInterest.ToString("C")&lt;/td>
+                                    &lt;td class="text-end">@@item.TotalInterest.ToString("C")&lt;/td>
+                                    &lt;td class="text-end">@@item.Balance.ToString("C")&lt;/td>
+                                    &lt;/tr>
+                                    }
+                                    &lt;/tbody>
+                                    &lt;/table>
+                                    &lt;/div>
+                                    &lt;/div>
+                                </code></pre>
+                            </div>
+                            <div class="col col-md-4">
+                                <h5>HelloWorld()</h5>
+                                <p>
+                                    Hello World is a function that displays an alert with a
+                                    message of "Hello World!"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="accordionItemEight" class="accordion mt-1">
+            <div class="accordion-item bg-secondary-subtle">
+                <h3 class="accordion-header">
+                    <button type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#accordionPanelEight"
+                            aria-expanded="true"
+                            aria-controls="accordionPanelEight"
+                            class="accordion-button bg-primary text-light">
+                        Loan model
+                    </button>
+                </h3>
+                <div id="accordionPanelEight" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="row row-cols-1 row-cols-md-2">
+                            <div class="col col-md-8">
+                                <pre data-start="5"><code class="language-dotnet">
+                            // Call Hello World!
+                            function HelloWorld() {
+                                alert('Hello World!');
+                            }                                            
+                        </code></pre>
+                            </div>
+                            <div class="col col-md-4">
+                                <h5>HelloWorld()</h5>
+                                <p>
+                                    Hello World is a function that displays an alert with a
+                                    message of "Hello World!"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="accordionItemNine" class="accordion mt-1">
+            <div class="accordion-item bg-secondary-subtle">
+                <h3 class="accordion-header">
+                    <button type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#accordionPanelNine"
+                            aria-expanded="true"
+                            aria-controls="accordionPanelNine"
+                            class="accordion-button bg-primary text-light">
+                        LoanPayment model
+                    </button>
+                </h3>
+                <div id="accordionPanelNine" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="row row-cols-1 row-cols-md-2">
+                            <div class="col col-md-8">
+                                <pre data-start="5"><code class="language-dotnet">
                             // Call Hello World!
                             function HelloWorld() {
                                 alert('Hello World!');

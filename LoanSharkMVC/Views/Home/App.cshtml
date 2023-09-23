@@ -1,3 +1,214 @@
-﻿<main class="flex-shrink-0">
-    <div class="container">APP CODE GOES HERE!</div>
+﻿@model LoanSharkMVC.Models.LoanModel
+
+<main class="flex-shrink-0">
+    <div class="container">
+        <div id="cSharpVersion" class="accordion mt-2">
+            <div class="accordion-item bg-secondary-subtle">
+                <h3 class="accordion-header">
+                    <button type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#cSharpVersionBody"
+                            aria-expanded="true"
+                            aria-controls="cSharpVersionBody"
+                            class="accordion-button bg-primary text-light">
+                        C# version
+                    </button>
+                </h3>
+                <div id="cSharpVersionBody"
+                     class="accordion-collapse collapse show">
+                    <div class="accordion-body">
+                        <div class="row row-cols-1 row-cols-md-2">
+                            <div class="col col-md-8">
+                                <h1 class="display-3 text-center">Loan Calculator</h1>
+                                <div class="row">
+                                    <div class="col-4 p-3 border border-black d-flex flex-column">
+                                        <div class="d-xl-flex mb-3">
+                                            <label asp-for="LoanAmount" class="form-label col-xl-4">Amount ($):</label>
+                                            <input asp-for="LoanAmount"
+                                                   type="number"
+                                                   value="25000"
+                                                   class="form-control col" />
+                                        </div>
+                                        <div class="d-xl-flex mb-3">
+                                            <label asp-for="LoanTerm" class="form-label col-xl-4">Term (months):</label>
+                                            <input asp-for="LoanTerm"
+                                                   type="number"
+                                                   value="60"
+                                                   class="form-control col" />
+                                        </div>
+                                        <div class="d-xl-flex mb-2">
+                                            <label asp-for="LoanInterest" class="form-label col-xl-4">Interest (%):</label>
+                                            <input asp-for="LoanInterest"
+                                                   type="number"
+                                                   value="5"
+                                                   class="form-control col" />
+                                        </div>
+                                        <div class="text-end mt-auto mt-xl-auto">
+                                            <button id="csBtnSubmit"
+                                                    type="submit"
+                                                    class="btn btn-primary btn-lg">
+                                                Calculate Loan
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 p-3 border border-black">
+                                        <h2 class="text-center border-bottom border-black">
+                                            Your Monthly Payment
+                                        </h2>
+                                        <div id="csDisplayHeader" class="row">
+                                            <div class="col-12">
+                                                <div class="mt-5">
+                                                    <h3 id="csMonthlyPayment" class="display-5 text-center"></h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 gx-5 mt-5">
+                                                <div class="row">
+                                                    <div class="col-6">Total Principal:</div>
+                                                    <div id="csTotalPrincipal" class="col-6 text-end"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">Total Interest:</div>
+                                                    <div id="csTotalInterest" class="col-6 text-end"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">Total Cost:</div>
+                                                    <div id="csTotalCost" class="col-6 text-end"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-12 table-responsive g-0">
+                                        <table class="table table-bordered table-striped table-sm">
+                                            <thead class="fw-bold">
+                                                <tr>
+                                                    <td>Month</td>
+                                                    <td class="text-end">Payment</td>
+                                                    <td class="text-end">Principal</td>
+                                                    <td class="text-end">Interest</td>
+                                                    <td class="text-end">Total Interest</td>
+                                                    <td class="text-end">Balance</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="csResults"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="javascriptVersion" class="accordion mt-2">
+            <div class="accordion-item bg-secondary-subtle">
+                <h3 class="accordion-header">
+                    <button type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#javascriptVersionBody"
+                            aria-expanded="true"
+                            aria-controls="javascriptVersionBody"
+                            class="accordion-button bg-primary text-light">
+                        JavaScript version
+                    </button>
+                </h3>
+                <div id="javascriptVersionBody"
+                     class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        <div class="row row-cols-1 row-cols-md-2">
+                            <div class="col col-md-8">
+                                <h1 class="display-3 text-center">Loan Calculator</h1>
+                                <div class="row">
+                                    <div class="col-4 p-3 border border-black d-flex flex-column">
+                                        <div class="d-xl-flex mb-3">
+                                            <label for="loanAmount" class="form-label col-xl-4">Amount ($):</label>
+                                            <input id="loanAmount"
+                                                   type="number"
+                                                   value="25000"
+                                                   class="form-control col" />
+                                        </div>
+                                        <div class="d-xl-flex mb-3">
+                                            <label for="loanTerm" class="form-label col-xl-4">Term (months):</label>
+                                            <input id="loanTerm"
+                                                   type="number"
+                                                   value="60"
+                                                   class="form-control col" />
+                                        </div>
+                                        <div class="d-xl-flex mb-2">
+                                            <label for="loanInterest" class="form-label col-xl-4">Interest (%):</label>
+                                            <input id="loanInterest"
+                                                   type="number"
+                                                   value="5"
+                                                   class="form-control col" />
+                                        </div>
+                                        <div class="text-end mt-auto mt-xl-auto">
+                                            <button id="btnSubmit"
+                                                    type="button"
+                                                    class="btn btn-primary btn-lg">
+                                                Calculate Loan
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-8 p-3 border border-black">
+                                        <h2 class="text-center border-bottom border-black">
+                                            Your Monthly Payment
+                                        </h2>
+                                        <div id="displayHeader" class="row">
+                                            <div class="col-12">
+                                                <div class="mt-5">
+                                                    <h3 id="monthlyPayment" class="display-5 text-center"></h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 gx-5 mt-5">
+                                                <div class="row">
+                                                    <div class="col-6">Total Principal:</div>
+                                                    <div id="totalPrincipal" class="col-6 text-end"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">Total Interest:</div>
+                                                    <div id="totalInterest" class="col-6 text-end"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">Total Cost:</div>
+                                                    <div id="totalCost" class="col-6 text-end"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-12 table-responsive g-0">
+                                        <table class="table table-bordered table-striped table-sm">
+                                            <thead class="fw-bold">
+                                                <tr>
+                                                    <td>Month</td>
+                                                    <td class="text-end">Payment</td>
+                                                    <td class="text-end">Principal</td>
+                                                    <td class="text-end">Interest</td>
+                                                    <td class="text-end">Total Interest</td>
+                                                    <td class="text-end">Balance</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="results"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
+<template id="loanTemplate">
+    <tr>
+        <td></td>
+        <td class="text-end"></td>
+        <td class="text-end"></td>
+        <td class="text-end"></td>
+        <td class="text-end"></td>
+        <td class="text-end"></td>
+    </tr>
+</template>

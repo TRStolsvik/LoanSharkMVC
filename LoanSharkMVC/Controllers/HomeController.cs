@@ -1,4 +1,6 @@
 ﻿using DotNET6_MVC_CodingChallengeTemplate.Models;
+using LoanSharkMVC.Logic;
+using LoanSharkMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -18,9 +20,21 @@ namespace DotNET6_MVC_CodingChallengeTemplate.Controllers
             return View();
         }
 
+        [HttpGet]
         public IActionResult App()
         {
-            return View();
+            LoanModel model = new();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult App(LoanModel model)
+        {
+            LoanModel output = LoanCalculator.GetValues(model);
+
+            return View(output);
         }
 
         public IActionResult Code()

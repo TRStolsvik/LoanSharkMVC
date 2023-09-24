@@ -60,8 +60,31 @@
                             <div class="col col-md-4">
                                 <h5>GetPayments()</h5>
                                 <p>
-                                    Hello World is a function that displays an alert with a
-                                    message of "Hello World!"
+                                    Here we do most of the work, starting with taking in the loan model as a parameter.
+                                </p>
+                                <p>
+                                    The first thing we do inside the function is to assign a monthly loan payment to the model, the calculation is done in it's own function beclow.
+                                </p>
+                                <p>
+                                    Next we declare some variables and assign some default values to them. We'll use these inside the following loop.
+                                </p>
+                                <p>
+                                    Next up is the work horse of the function, the for-loop. It will start at the first month and will keep going for as long as it is equal to the loan term, iterating by 1 each time.
+                                </p>
+                                <p>
+                                    Inside the loop we assign the monthly interest amount, which is calculated in it's own function, to the monthlyInterestAmount variable. We also append (+=) this amount to the totalInterest variable.
+                                </p>
+                                <p>
+                                    Next we assign the result of the loan payment - monthly interest amount to the monthlyPrincipal variable and subtract (-=) the monthly principal from the balance.
+                                </p>
+                                <p>
+                                    Now we instantiate a new object from the LoanPaymentModel and we assign each variable to this new object.
+                                </p>
+                                <p>
+                                    Finally for the loop-portion, we'll add the loanPayment to the LoanPayments list of the loan object.
+                                </p>
+                                <p>
+                                    Finally we'll assign the total interest to the TotalInterest of the loan object, assign the loan amount + total interest to the TotalCost of the loan object. The last thing we'll do is to return the loan object.
                                 </p>
                             </div>
                         </div>
@@ -102,8 +125,16 @@
                             <div class="col col-md-4">
                                 <h5>CalculateMonthlyPayment()</h5>
                                 <p>
-                                    Hello World is a function that displays an alert with a
-                                    message of "Hello World!"
+                                    Here we take in the loan amount, the loan interest and the loan term, all as decimals, and we return a new decimal.
+                                </p>
+                                <p>
+                                    First off we assign to a new variable, the monthly loan interest, which will be calculated by one of the following functions.
+                                </p>
+                                <p>
+                                    Next we have to doncert the monthly interest and loan amount to doubles, this is because the Math library we'll use for the payment calculation works with the double type. An int will work easily since it's a whole number, but the decimals will need to be converted.
+                                </p>
+                                <p>
+                                    Finally we return the payment which is converted back to a decimal.
                                 </p>
                             </div>
                         </div>
@@ -137,8 +168,10 @@
                             <div class="col col-md-4">
                                 <h5>CalculateMonthlyInterest()</h5>
                                 <p>
-                                    Hello World is a function that displays an alert with a
-                                    message of "Hello World!"
+                                    Here we take in the loan's interest rate as a decimal, and return a new decimal.
+                                </p>
+                                <p>
+                                    For the actual calculation, we return the loan interest rate divided by 1200 (100% * 12 months) in order to get the monthly interest.
                                 </p>
                             </div>
                         </div>
@@ -172,8 +205,10 @@
                             <div class="col col-md-4">
                                 <h5>CalculateMonthlyInterestAmount()</h5>
                                 <p>
-                                    Hello World is a function that displays an alert with a
-                                    message of "Hello World!"
+                                    Here we take in the balance and monthly interest rate decimals, and return a new decimal.
+                                </p>
+                                <p>
+                                    This function's sole job is to calculate the amount of interest payed per month by multiplying the current balance by the monthly interest rate and returning it to the view
                                 </p>
                             </div>
                         </div>
@@ -217,8 +252,10 @@
                             <div class="col col-md-4">
                                 <h5>App // GET</h5>
                                 <p>
-                                    Hello World is a function that displays an alert with a
-                                    message of "Hello World!"
+                                    The controller's "get" action of the App() function instantiates a new version of the LoanModel.
+                                </p>
+                                <p>
+                                    We assign default values to the loan object and then return the object to the view.
                                 </p>
                             </div>
                         </div>
@@ -256,8 +293,13 @@
                             <div class="col col-md-4">
                                 <h5>App // POST</h5>
                                 <p>
-                                    Hello World is a function that displays an alert with a
-                                    message of "Hello World!"
+                                    The controller's "post" action of the App() method takes in the loan object we instantiated before.
+                                </p>
+                                <p>
+                                    We create a new empty loan object and assign the returned object from the GetPayments() function to it. GetPayments() takes in the original loan object as a parameter for us to work with.
+                                </p>
+                                <p>
+                                    Finally we return the object to the view.
                                 </p>
                             </div>
                         </div>
@@ -283,105 +325,99 @@
                             <div class="col col-md-8">
                                 <pre data-start="5"><code class="language-dotnet">
                                     &lt;form asp-controller="Home" asp-action="App" method="post" class="row">
-                                    &lt;div class="col-4 p-3 border border-black d-flex flex-column">
-                                    &lt;div class="d-xl-flex mb-3">
-                                    &lt;label asp-for="LoanAmount" class="form-label col-xl-4">Amount ($):&lt;/label>
-                                    &lt;input asp-for="LoanAmount"
-                                    type="number"
-                                    value="@@Model.LoanAmount"
-                                    class="form-control col" />
-                                    &lt;/div>
-                                    &lt;div class="d-xl-flex mb-3">
-                                    &lt;label asp-for="LoanTerm" class="form-label col-xl-4">Term (months):&lt;/label>
-                                    &lt;input asp-for="LoanTerm"
-                                    type="number"
-                                    value="@@Model.LoanTerm"
-                                    class="form-control col" />
-                                    &lt;/div>
-                                    &lt;div class="d-xl-flex mb-2">
-                                    &lt;label asp-for="LoanInterest" class="form-label col-xl-4">Interest (%):&lt;/label>
-                                    &lt;input asp-for="LoanInterest"
-                                    type="number"
-                                    value="@@Model.LoanInterest"
-                                    class="form-control col" />
-                                    &lt;/div>
-                                    &lt;div class="text-end mt-auto mt-xl-auto">
-                                    &lt;button id="csBtnSubmit"
-                                    type="submit"
-                                    class="btn btn-primary btn-lg">
-                                    Calculate Loan
-                                    &lt;/button>
-                                    &lt;/div>
-                                    &lt;/div>
-                                    &lt;div class="col-8 p-3 border border-black">
-                                    &lt;h2 class="text-center border-bottom border-black">
-                                    Your Monthly Payment
-                                    &lt;/h2>
-                                    &lt;div id="csDisplayHeader" class="row">
-                                    &lt;div class="col-12">
-                                    &lt;div class="mt-5">
-                                    &lt;h3 id="csMonthlyPayment" class="display-5 text-center">@@Model.LoanPayment.ToString("C")&lt;/h3>
-                                    &lt;/div>
-                                    &lt;/div>
-                                    &lt;div class="col-12 gx-5 mt-5">
-                                    &lt;div class="row">
-                                    &lt;div class="col-6">Total Principal:
-                                    &lt;/div>
-                                    &lt;div id="csTotalPrincipal" class="col-6 text-end">@@Model.LoanAmount.ToString("C")
-                                    &lt;/div>
-                                    &lt;/div>
-                                    &lt;div class="row">
-                                    &lt;div class="col-6">Total Interest:
-                                    &lt;/div>
-                                    &lt;div id="csTotalInterest" class="col-6 text-end">@@Model.TotalInterest.ToString("C")
-                                    &lt;/div>
-                                    &lt;/div>
-                                    &lt;div class="row">
-                                    &lt;div class="col-6">Total Cost:
-                                    &lt;/div>
-                                    &lt;div id="csTotalCost" class="col-6 text-end">@@Model.TotalCost.ToString("C")
-                                    &lt;/div>
-                                    &lt;/div>
-                                    &lt;/div>
-                                    &lt;/div>
-                                    &lt;/div>
+                                        &lt;div class="col-4 p-3 border border-black d-flex flex-column">
+                                            &lt;div class="d-xl-flex mb-3">
+                                                &lt;label asp-for="LoanAmount" class="form-label col-xl-4">Amount ($):&lt;/label>
+                                                &lt;input asp-for="LoanAmount" type="number" value="@@Model.LoanAmount" class="form-control col" />
+                                            &lt;/div>
+                                            &lt;div class="d-xl-flex mb-3">
+                                                &lt;label asp-for="LoanTerm" class="form-label col-xl-4">Term (months):&lt;/label>
+                                                &lt;input asp-for="LoanTerm" type="number" value="@@Model.LoanTerm" class="form-control col" />
+                                            &lt;/div>
+                                            &lt;div class="d-xl-flex mb-2">
+                                                &lt;label asp-for="LoanInterest" class="form-label col-xl-4">Interest (%):&lt;/label>
+                                                &lt;input asp-for="LoanInterest" type="number" value="@@Model.LoanInterest" class="form-control col" />
+                                            &lt;/div>
+                                            &lt;div class="text-end mt-auto mt-xl-auto">
+                                                &lt;button id="csBtnSubmit" type="submit" class="btn btn-primary btn-lg">
+                                                Calculate Loan
+                                                &lt;/button>
+                                            &lt;/div>
+                                        &lt;/div>
+                                        &lt;div class="col-8 p-3 border border-black">
+                                            &lt;h2 class="text-center border-bottom border-black">
+                                                Your Monthly Payment
+                                            &lt;/h2>
+                                            &lt;div id="csDisplayHeader" class="row">
+                                                &lt;div class="col-12">
+                                                    &lt;div class="mt-5">
+                                                    &lt;h3 id="csMonthlyPayment" class="display-5 text-center">@@Model.LoanPayment.ToString("C")&lt;/h3>
+                                                    &lt;/div>
+                                                &lt;/div>
+                                                &lt;div class="col-12 gx-5 mt-5">
+                                                    &lt;div class="row">
+                                                        &lt;div class="col-6">Total Principal: &lt;/div>
+                                                        &lt;div id="csTotalPrincipal" class="col-6 text-end">@@Model.LoanAmount.ToString("C") &lt;/div>
+                                                    &lt;/div>
+                                                    &lt;div class="row">
+                                                        &lt;div class="col-6">Total Interest: &lt;/div>
+                                                        &lt;div id="csTotalInterest" class="col-6 text-end">@@Model.TotalInterest.ToString("C") &lt;/div>
+                                                    &lt;/div>
+                                                    &lt;div class="row">
+                                                        &lt;div class="col-6">Total Cost: &lt;/div>
+                                                        &lt;div id="csTotalCost" class="col-6 text-end">@@Model.TotalCost.ToString("C") &lt;/div>
+                                                    &lt;/div>
+                                                &lt;/div>
+                                            &lt;/div>
+                                        &lt;/div>
                                     &lt;/form>
                                     &lt;div class="row mt-5">
-                                    &lt;div class="col-12 table-responsive g-0">
-                                    &lt;table class="table table-bordered table-striped table-sm">
-                                    &lt;thead class="fw-bold">
-                                    &lt;tr>
-                                    &lt;td>Month&lt;/td>
-                                    &lt;td class="text-end">Payment&lt;/td>
-                                    &lt;td class="text-end">Principal&lt;/td>
-                                    &lt;td class="text-end">Interest&lt;/td>
-                                    &lt;td class="text-end">Total Interest&lt;/td>
-                                    &lt;td class="text-end">Balance&lt;/td>
-                                    &lt;/tr>
-                                    &lt;/thead>
-                                    &lt;tbody id="csResults">
-                                    @@foreach (var item in Model.LoanPayments)
-                                    {
-                                    &lt;tr>
-                                    &lt;td>@@item.Month&lt;/td>
-                                    &lt;td class="text-end">@@item.Payment.ToString("C")&lt;/td>
-                                    &lt;td class="text-end">@@item.MonthlyPrincipal.ToString("C")&lt;/td>
-                                    &lt;td class="text-end">@@item.MonthlyInterest.ToString("C")&lt;/td>
-                                    &lt;td class="text-end">@@item.TotalInterest.ToString("C")&lt;/td>
-                                    &lt;td class="text-end">@@item.Balance.ToString("C")&lt;/td>
-                                    &lt;/tr>
-                                    }
-                                    &lt;/tbody>
-                                    &lt;/table>
-                                    &lt;/div>
+                                        &lt;div class="col-12 table-responsive g-0">
+                                            &lt;table class="table table-bordered table-striped table-sm">
+                                                &lt;thead class="fw-bold">
+                                                    &lt;tr>
+                                                        &lt;td>Month&lt;/td>
+                                                        &lt;td class="text-end">Payment&lt;/td>
+                                                        &lt;td class="text-end">Principal&lt;/td>
+                                                        &lt;td class="text-end">Interest&lt;/td>
+                                                        &lt;td class="text-end">Total Interest&lt;/td>
+                                                        &lt;td class="text-end">Balance&lt;/td>
+                                                    &lt;/tr>
+                                                &lt;/thead>
+                                                &lt;tbody id="csResults">
+                                                    @@foreach (var item in Model.LoanPayments)
+                                                    {
+                                                        &lt;tr>
+                                                            &lt;td>@@item.Month&lt;/td>
+                                                            &lt;td class="text-end">@@item.Payment.ToString("C")&lt;/td>
+                                                            &lt;td class="text-end">@@item.MonthlyPrincipal.ToString("C")&lt;/td>
+                                                            &lt;td class="text-end">@@item.MonthlyInterest.ToString("C")&lt;/td>
+                                                            &lt;td class="text-end">@@item.TotalInterest.ToString("C")&lt;/td>
+                                                            &lt;td class="text-end">@@item.Balance.ToString("C")&lt;/td>
+                                                        &lt;/tr>
+                                                    }
+                                                &lt;/tbody>
+                                            &lt;/table>
+                                        &lt;/div>
                                     &lt;/div>
                                 </code></pre>
                             </div>
                             <div class="col col-md-4">
-                                <h5>HelloWorld()</h5>
+                                <h5>App view</h5>
                                 <p>
-                                    Hello World is a function that displays an alert with a
-                                    message of "Hello World!"
+                                    The App view contains the form and table structure we'll use to display the payment schedule.
+                                </p>
+                                <p>
+                                    It takes in the LoanAmount, LoanTerm and LoanInterest (rate) from the user. It has standard values, but the user can replace these if they want.
+                                </p>
+                                <p>
+                                    In the form header section we display the immediately critical information about the loan. This is the monthly payment, the total principal (that is the loan amount before interest), the total interest payed and finally the total cost of the loan.
+                                </p>
+                                <p>
+                                    In the table we simply display the term (month) from 1 through the end of the chosen length of terms, 60 for our example, where each month is it's own row.
+                                </p>
+                                <p>
+                                    The remaining columns from left to right hold the monthly payment (which should be the same until the end), the monthly principal (the amount of the payment which goes toward the loan amount), the monthly interest amount, the total interest amount so far and finally, the remaining balance of the loan.
                                 </p>
                             </div>
                         </div>
@@ -406,17 +442,23 @@
                         <div class="row row-cols-1 row-cols-md-2">
                             <div class="col col-md-8">
                                 <pre data-start="5"><code class="language-dotnet">
-                            // Call Hello World!
-                            function HelloWorld() {
-                                alert('Hello World!');
-                            }                                            
-                        </code></pre>
+                                    public class LoanModel
+                                    {
+                                        public decimal LoanAmount { get; set; }
+                                        public decimal LoanInterest { get; set; }
+                                        public int LoanTerm { get; set; }
+                                        public decimal LoanPayment { get; set; }
+                                        public decimal TotalInterest { get; set; }
+                                        public decimal TotalCost { get; set; }
+
+                                        public List&lt;LoanPaymentModel> LoanPayments { get; set; } = new();
+                                    }
+                                </code></pre>
                             </div>
                             <div class="col col-md-4">
-                                <h5>HelloWorld()</h5>
+                                <h5>Loan model</h5>
                                 <p>
-                                    Hello World is a function that displays an alert with a
-                                    message of "Hello World!"
+                                    The LoanModel holds the 6 properties we need to do our calculations, as well as a properties that is defined as a list of the LoanPaymentModel, which will hold the payment schedule.
                                 </p>
                             </div>
                         </div>
@@ -441,17 +483,23 @@
                         <div class="row row-cols-1 row-cols-md-2">
                             <div class="col col-md-8">
                                 <pre data-start="5"><code class="language-dotnet">
-                            // Call Hello World!
-                            function HelloWorld() {
-                                alert('Hello World!');
-                            }                                            
-                        </code></pre>
+                                    public class LoanPaymentModel
+                                    {
+                                        public int Month { get; set; }
+                                        [DisplayFormat(DataFormatString = "{0:C0}", ApplyFormatInEditMode = true)]
+                                        public decimal Payment { get; set; }
+                                        [DisplayFormat(DataFormatString = "{0:C0}")]
+                                        public decimal MonthlyPrincipal { get; set; }
+                                        public decimal MonthlyInterest { get; set; }
+                                        public decimal TotalInterest { get; set; }
+                                        public decimal Balance { get; set; }
+                                    }
+                                </code></pre>
                             </div>
                             <div class="col col-md-4">
-                                <h5>HelloWorld()</h5>
+                                <h5>LoanPayment model</h5>
                                 <p>
-                                    Hello World is a function that displays an alert with a
-                                    message of "Hello World!"
+                                    The LoanPaymentModel holds the 6 properties we need in order to generate the payment schedule.
                                 </p>
                             </div>
                         </div>
